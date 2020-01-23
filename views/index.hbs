@@ -30,11 +30,11 @@
 
     <script>
         //import dotenv from 'dotenv'
-        mapboxgl.accessToken = '';
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWVsbG93MjE5IiwiYSI6ImNrNXFtbXVocDA0MXozbm1iM3RyZ3B3dnAifQ.S2U2FINLivgEAYsJgXZ5wQ';
         var map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/streets-v11',
-            center: [77.3062928, 28.6219208], // Longitude, Latitude
+            center: [0, 0], // Longitude, Latitude
             zoom: 9 // starting zoom
         });
 
@@ -75,19 +75,19 @@
                                         'geometry': {
                                             'type': 'Point',
                                             'coordinates': [77.3062928, 28.6219208],
-                                            'text': 'Heello'
+                                            //'text': 'Heello'
                                         },
                                     },
                                     {
                                         'type': 'Feature',
                                         'properties': {
                                             'description':
-                                                '<strong>SomePlace</strong>',
+                                                '<strong>College</strong>',
                                             'icon': 'marker'
                                         },
                                         'geometry': {
                                             'type': 'Point',
-                                            'coordinates': [77.1781535, 28.5966181]
+                                            'coordinates': [77.0652005, 28.7218492]
                                         }
                                     }
                                 ]
