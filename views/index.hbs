@@ -30,7 +30,7 @@
 
     <script>
         //import dotenv from 'dotenv'
-        mapboxgl.accessToken = 'pk.eyJ1IjoibWVsbG93MjE5IiwiYSI6ImNrNXFtbXVocDA0MXozbm1iM3RyZ3B3dnAifQ.S2U2FINLivgEAYsJgXZ5wQ';
+        mapboxgl.accessToken = '';
         var map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/streets-v11',
@@ -117,11 +117,11 @@
         });
 
 
-        map.on('mouseenter', 'places', function () {
+        map.on('mouseenter', 'points', function () {
             map.getCanvas().style.cursor = 'pointer';
         });
 
-        map.on('mouseleave', 'places', function () {
+        map.on('mouseleave', 'points', function () {
             map.getCanvas().style.cursor = '';
         });
 
