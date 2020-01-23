@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+
+</head>
+
+<body>
+    <script
+        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css"
+        type="text/css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+    <div id='map' style='width: 700px; height: 700px;'></div>
+
+    <script src="https://unpkg.com/es6-promise@4.2.4/dist/es6-promise.auto.min.js"></script>
+
+    <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWVsbG93MjE5IiwiYSI6ImNrNXFtbXVocDA0MXozbm1iM3RyZ3B3dnAifQ.S2U2FINLivgEAYsJgXZ5wQ';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [77.3062928, 28.6219208], // Longitude, Latitude
+            zoom: 9 // starting zoom
+        });
+
+        //Geocoder
+
+        map.addControl(
+            new MapboxGeocoder({
+                accessToken: mapboxgl.accessToken,
+                mapboxgl: mapboxgl
+            })
+        );
+
+        // Add zoom and rotation controls to the map.
+
+        map.addControl(new mapboxgl.NavigationControl());
+
+        map.on('load', function () {
+            map.loadImage(
+                'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
+                function (error, image) {
+                    if (error) throw error;
+                    map.addImage('marker', image);
+                    map.addLayer({
+                        'id': 'points',
+                        'type': 'symbol',
+                        'source': {
+                            'type': 'geojson',
+                            'data': {
+                                'type': 'FeatureCollection',
+                                'features': [
+                                    {
+                                        'type': 'Feature',
+                                        'properties': {
+                                            'description':
+                                                '<strong>Ruchir Home</strong>',
+                                            'icon': 'marker'
+                                        },
+                                        'geometry': {
+                                            'type': 'Point',
+                                            'coordinates': [77.3062928, 28.6219208],
+                                            'text': 'Heello'
+                                        },
+                                    },
+                                    {
+                                        'type': 'Feature',
+                                        'properties': {
+                                            'description':
+                                                '<strong>My Home</strong>',
+                                            'icon': 'marker'
+                                        },
+                                        'geometry': {
+                                            'type': 'Point',
+                                            'coordinates': [77.1781535, 28.5966181]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        'layout': {
+                            'icon-image': 'marker',
+                            'icon-size': 0.060
+                        }
+                    });
+                }
+            );
+        });
+
+        map.on('click', 'points', function (e) {
+            var coordinates = e.features[0].geometry.coordinates.slice();
+            var description = e.features[0].properties.description;
+
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+
+            new mapboxgl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(description)
+                .addTo(map);
+        });
+
+
+        map.on('mouseenter', 'places', function () {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', 'places', function () {
+            map.getCanvas().style.cursor = '';
+        });
+
+    </script>
+</body>
+
+</html>
